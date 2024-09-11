@@ -1,0 +1,21 @@
+defaults:
+  - policy: pd
+  - system: inv_pendulum_with_friction
+  - simulator: casadi
+  - scenario: scenario
+  - common: ${system}
+  - initial_conditions: ${system}
+
+callbacks:
+  # - regelum.callback.ScenarioStepLogger
+  - regelum.callback.HistoricalDataCallback
+  - regelum.callback.ValueCallback
+  - src.callback.PolicyNumpyModelSaver
+  # - src.callback.CALFHistoricalDataCallback
+  - src.callback.HandlerChecker
+  - src.callback.PolicyModelSaver
+  - src.callback.CriticModelSaver
+
+rehydra:
+  sweep:
+    dir: ${oc.env:REGELUM_DATA_DIR}/outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}

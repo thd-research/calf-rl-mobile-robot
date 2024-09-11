@@ -1,0 +1,8 @@
+_target_: src.policy.ThreeWheeledRobotSimpleMPC
+
+action_bounds: = np.array([[-0.22, 0.22], [-2.84, 2.84]])
+system: ~ system
+R1_diag: = [1, 10, 1, 0, 0]
+Nactor: 6
+optimizer_config: 
+  _target_: regelum.CasadiOptimizerConfig

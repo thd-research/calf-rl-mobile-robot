@@ -1,0 +1,6 @@
+_target_: src.policy.ThreeWheeledRobotNomial
+
+optimizer_config: 
+  _target_: regelum.CasadiOptimizerConfig
+action_bounds: = np.array([[-0.22, 0.22], [-2.84, 2.84]])
+kappa_params: $ initial_conditions.kappa_params

@@ -1,0 +1,3 @@
+_target_: src.system.MyThreeWheeledRobotKinematic
+
+state_init: $ initial_conditions.state_init

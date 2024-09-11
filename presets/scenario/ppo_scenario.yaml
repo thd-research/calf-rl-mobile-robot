@@ -1,0 +1,56 @@
+_target_: src.scenario.MyPPO
+
+name%%: ppo
+defaults:
+  - policy_model: perceptron_with_truncated_normal_noise
+  - critic_model: perceptron
+
+sampling_time: $ common.sampling_time
+running_objective:
+  _target_: src.objective.ThreeWheeledRobotCostWithSpot
+  quadratic_model:
+    _target_: regelum.model.ModelQuadLin
+    # weights: = numpy.array([100000., 2000., 1, 0, 0])
+    weights: = numpy.array([100., 100., 1, 0, 0])
+    quad_matrix_type: diagonal
+    is_with_linear_terms: False
+  spot_gain: 100
+  spot_x_center: -0.5
+  spot_y_center: -0.5
+  spot_std: 0.1
+
+observer:
+  _target_: regelum.observer.ObserverTrivial
+
+stopping_criterion: 
+  _target_: regelum.stopping_criterion.NeverCriterion
+
+simulator: ~ simulator
+running_objective_type: cost
+discount_factor: 0.7
+N_iterations: 100
+N_episodes: 2
+critic_td_n: 1
+gae_lambda: 0.0
+cliprange: 0.2 
+is_normalize_advantages: True
+
+critic_n_epochs: 50
+critic_opt_method: = torch.optim.Adam
+critic_opt_method_kwargs: 
+  lr: 0.001
+
+policy_n_epochs: 100
+policy_opt_method: = torch.optim.Adam
+policy_opt_method_kwargs: 
+  lr: 0.005
+
+policy_model:
+  dim_input: 3
+  output_bounds: = np.array([[-2.2, 2.2], [-2.84, 2.84]])
+
+critic_model:
+  dim_input: 3
+
+policy_checkpoint_path: ""
+critic_checkpoint_path: ""
