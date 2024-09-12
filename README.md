@@ -18,6 +18,7 @@
     - [5. MPC](#5-mpc)
   - [Perform the proposed controllers on Turtlebot3 in real-world](#perform-the-proposed-controllers-on-turtlebot3-in-real-world)
     - [Turtlebot setup](#turtlebot-setup)
+    - [Perform the proposed controllers](#perform-the-proposed-controllers)
 
 
 # Setup
@@ -277,11 +278,42 @@ python3.10 run.py \
 ### Turtlebot setup
 To control physical turtlebot, we need to connect the PC running Regelum controllers and the turtlebot to the same Wifi access point. 
 
-1. Network configuration: Follow the instruction [here](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#network-configuration), find the assigned IP address of your PC (i.e. 192.168.122.11) and execute this command: (inside docker container)
+**NOTE: The Turtlebot in Gazebo is not allowed to run while we run the turtlebot in real-world.**
+
+1. Network configuration: Follow the instruction [here](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#network-configuration), find the assigned IP address of your PC (i.e. `192.168.122.11`) and execute these commands: (inside docker container)
 ```
 source config_ros_host.sh <your_IP_address>
+source ~/.bashrc
+```
+And then start ROS Master:
+
+```
+roscore
 ```
 
 2. Turtlebot calibration:
 Follow the Bring-up instruction [here](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/#bringup).
 
+### Perform the proposed controllers
+
+Execute the command mentioned in the [previous section](#perform-nonimal-mpc-controllers-and-calf-sarsa-m-ppo-controllers-with-checkpoints) but change the variable `simulator.use_phy_robot` to `true`.
+
+For example: Nominal controller
+
+```
+python3.10 run.py \
+           +seed=7 \
+           simulator=ros \
+           simulator.time_final=50 \
+           scenario=my_scenario \
+           scenario.N_iterations=1 \
+           system=3wrobot_kin_with_spot \
+           initial_conditions=3wrobot_kin_with_spot \
+           policy=rc_calfq \
+           +policy.nominal_kappa_params="[0.2, 1.5, -.15]" \
+           policy.nominal_only=True \
+           common.sampling_time=0.1 \
+           simulator.use_phy_robot=true \
+           --single-thread \
+           --experiment=benchmark
+```
