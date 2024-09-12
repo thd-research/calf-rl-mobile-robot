@@ -301,7 +301,7 @@ Weight matrices of each controller are stored in different path as described bel
 
 For example:
 ```
-regelum_data/outputs/2024-08-29/12-33-12/0/.callbacks/PolicyNumpyModelSaver/model_it_00015.npy
+/regelum-ws/regelum_data/outputs/2024-08-29/12-33-12/0/.callbacks/PolicyNumpyModelSaver/model_it_00015.npy
 ```
 
 2. PPO
@@ -318,7 +318,7 @@ For example:
 ```
 /regelum-ws/regelum_data/outputs/2024-08-27/23-00-48/0/.callbacks/PolicyModelSaver/model_it_00053
 /regelum-ws/regelum_data/outputs/2024-08-27/23-00-48/0/.callbacks/CriticModelSaver/model_it_00053
-```
+``` 
 
 ## Perform the proposed controllers on Turtlebot3 in real-world
 
