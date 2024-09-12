@@ -16,6 +16,8 @@
     - [3. PPO](#3-ppo-1)
     - [4. Nominal](#4-nominal)
     - [5. MPC](#5-mpc)
+  - [Perform the proposed controllers on Turtlebot3 in real-world](#perform-the-proposed-controllers-on-turtlebot3-in-real-world)
+    - [Turtlebot setup](#turtlebot-setup)
 
 
 # Setup
@@ -269,3 +271,17 @@ python3.10 run.py \
             --interactive \
             --experiment=benchmark
 ```
+
+## Perform the proposed controllers on Turtlebot3 in real-world
+
+### Turtlebot setup
+To control physical turtlebot, we need to connect the PC running Regelum controllers and the turtlebot to the same Wifi access point. 
+
+1. Network configuration: Follow the instruction [here](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#network-configuration), find the assigned IP address of your PC (i.e. 192.168.122.11) and execute this command: (inside docker container)
+```
+source config_ros_host.sh <your_IP_address>
+```
+
+2. Turtlebot calibration:
+Follow the Bring-up instruction [here](https://emanual.robotis.com/docs/en/platform/turtlebot3/bringup/#bringup).
+
