@@ -304,8 +304,7 @@ For example:
 regelum_data/outputs/2024-08-29/12-33-12/0/.callbacks/PolicyNumpyModelSaver/model_it_00015.npy
 ```
 
-
-3. PPO
+2. PPO
 
 ```
 # Policy weight
