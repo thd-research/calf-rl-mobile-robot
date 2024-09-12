@@ -19,6 +19,7 @@ For more details, please refer to the paper.
     - [3. PPO](#3-ppo-1)
     - [4. Nominal](#4-nominal)
     - [5. MPC](#5-mpc)
+  - [Monitor training progress and Pick checkpoints](#monitor-training-progress-and-pick-checkpoints)
   - [Perform the proposed controllers on Turtlebot3 in real-world](#perform-the-proposed-controllers-on-turtlebot3-in-real-world)
     - [Turtlebot setup](#turtlebot-setup)
     - [Perform the proposed controllers](#perform-the-proposed-controllers)
@@ -279,7 +280,50 @@ python3.10 run.py \
             --experiment=benchmark
 ```
 
+## Monitor training progress and Pick checkpoints
+
+To monitor the performance of each controller and pick the best checkpoint over iteration or over hyperparameters, we utilize the advance of MLFlow interface.
+
+Open a new terminal and get into the docker container, and execute these commands:
+```
+cd regelum-ws/regelum_data
+mlflow ui
+```
+
+Then MLFlow will pop-up in your browser.
+
+Weight matrices of each controller are stored in different path as described below:
+
+1. CALF and SARSA-m
+```
+/regelum-ws/regelum_data/outputs/<DATE>/<TIME>/<seed_index>/.callbacks/PolicyNumpyModelSaver/model_it_<ITERATION>.npy
+```
+
+For example:
+```
+regelum_data/outputs/2024-08-29/12-33-12/0/.callbacks/PolicyNumpyModelSaver/model_it_00015.npy
+```
+
+
+3. PPO
+
+```
+# Policy weight
+/regelum-ws/regelum_data/outputs/<DATE>/<TIME>/<seed_index>/.callbacks/PolicyModelSaver/model_it_<ITERATION>
+
+# Critic weight
+/regelum-ws/regelum_data/outputs/<DATE>/<TIME>/<seed_index>/.callbacks/CriticModelSaver/model_it_<ITERATION>
+```
+
+For example:
+```
+/regelum-ws/regelum_data/outputs/2024-08-27/23-00-48/0/.callbacks/PolicyModelSaver/model_it_00053
+/regelum-ws/regelum_data/outputs/2024-08-27/23-00-48/0/.callbacks/CriticModelSaver/model_it_00053
+```
+
 ## Perform the proposed controllers on Turtlebot3 in real-world
+
+The CALF, SARSA-m and PPO controllers should be trained on Gazebo simulation environment firstly. Then the best checkpoint is chosen manually based on the accumulative cost displayed on the MLFlow UI.
 
 ### Turtlebot setup
 To control physical turtlebot, we need to connect the PC running Regelum controllers and the turtlebot to the same Wifi access point. 
