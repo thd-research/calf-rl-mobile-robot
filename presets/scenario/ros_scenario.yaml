@@ -1,6 +1,5 @@
 _target_: src.scenario.ROSMiddleScenario
 
-
 policy: ~ policy
 simulator: ~ simulator
 sampling_time: $ common.sampling_time

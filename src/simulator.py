@@ -54,6 +54,7 @@ class RosTurtlebot(CasADi):
         # print("[sim] system bounds:", system.action_bounds)
         self._action = np.expand_dims(self.initialize_init_action(), axis=0)
         self.loginfo = logging.getLogger("regelum").info
+        self.logwarning = logging.getLogger("regelum").warning
         self.reset()
 
     def get_velocity(self, msg):
@@ -146,17 +147,23 @@ class RosTurtlebot(CasADi):
         self.rate = rospy.Rate(self.RATE)
         self.episode_start = None
 
-        if not self.use_phy_robot:
-            subprocess.check_output(["python3.10", f"{Path(__file__).parent.resolve()}/reset_ros.py"])
+        try:
+            if not self.use_phy_robot:
+                subprocess.check_output(["python3.10", f"{Path(__file__).parent.resolve()}/reset_ros.py"])
+        except: 
+            self.logwarning("Fail to run reset_ros script.")
 
-        self.receive_action(np.zeros_like(self._action))
+        self.receive_action(np.zeros_like(self._action), force=True)
 
         if hasattr(self, "_time_measurement"):
             delattr(self, "_time_measurement")
 
     # Publish action to gazebo
-    def receive_action(self, action):
-        if not hasattr(self, "is_time_for_new_sample") or not self.is_time_for_new_sample:
+    def receive_action(self, action, force=False):
+        if not force and (
+                    not hasattr(self, "is_time_for_new_sample") or
+                    not self.is_time_for_new_sample
+                    ):
             return
         
         try:
@@ -194,12 +201,6 @@ class RosTurtlebot(CasADi):
         Return: -1: episode ended
                 otherwise: episode continues
         '''
-        # sleep_duration_s = self.max_step
-        # conv_ns_to_s = lambda x: x / 10**9
-        # if hasattr(self, "_time_measurement"):
-        #     last_computation_duration = conv_ns_to_s(time.perf_counter_ns() - self._time_measurement)
-        #     sleep_duration_s = (sleep_duration_s - last_computation_duration)
-        
         self.update_time()
 
         if self.time >= self.time_final:
@@ -207,13 +208,6 @@ class RosTurtlebot(CasADi):
         
         if rospy.is_shutdown():
             raise RuntimeError("Ros shutdowns")
-
-        # if sleep_duration_s < 0:
-        #     self.loginfo(f"computation takes {last_computation_duration}s \n Please increase your sampling time or upgrade computational unit.")
-        # else:
-        #     time.sleep(sleep_duration_s)
-
-        # self._time_measurement = time.perf_counter_ns()
 
         self.observation = self.get_observation(
                 time=self.time, state=self.new_state, inputs=self.system.inputs

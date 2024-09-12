@@ -1,6 +1,6 @@
 defaults:
-  - policy: pd
-  - system: inv_pendulum_with_friction
+  - policy: rc_calfq
+  - system: 3wrobot_kin_with_spot
   - simulator: casadi
   - scenario: scenario
   - common: ${system}

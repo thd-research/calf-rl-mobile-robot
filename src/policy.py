@@ -2,11 +2,6 @@ from numpy.core.multiarray import array as array
 from regelum.policy import Policy
 import numpy as np
 from scipy.special import expit
-from src.system import (
-    InvertedPendulum,
-    InvertedPendulumWithFriction,
-    InvertedPendulumWithMotor,
-)
 from typing import Union
 from regelum.utils import rg
 from regelum import CasadiOptimizerConfig
@@ -51,297 +46,6 @@ def hard_switch(signal1: float, signal2: float, condition: bool):
 
 def pd_based_on_sin(observation, pd_coeffs=[20, 10]):
     return -pd_coeffs[0] * np.sin(observation[0, 0]) - pd_coeffs[1] * observation[0, 1]
-
-
-class InvPendulumPolicyPD(Policy):
-    def __init__(self, pd_coeffs: np.ndarray, action_min: float, action_max: float):
-        super().__init__()
-
-        self.pid_coeffs = np.array(pd_coeffs).reshape(1, -1)
-        self.action_min = action_min
-        self.action_max = action_max
-
-    def get_action(self, observation: np.ndarray):
-        action = np.clip(
-            (self.pid_coeffs * observation).sum(),
-            self.action_min,
-            self.action_max,
-        )
-        return np.array([[action]])
-
-
-class InvertedPendulumEnergyBased(Policy):
-    def __init__(
-        self,
-        gain: float,
-        action_min: float,
-        action_max: float,
-        switch_loc: float,
-        pd_coeffs: np.ndarray,
-        system: Union[InvertedPendulum, InvertedPendulumWithFriction],
-    ):
-        super().__init__()
-        self.gain = gain
-        self.action_min = action_min
-        self.action_max = action_max
-        self.switch_loc = switch_loc
-        self.pd_coeffs = pd_coeffs
-        self.system = system
-
-    def get_action(self, observation: np.ndarray) -> np.ndarray:
-
-        params = self.system._parameters
-        mass, grav_const, length = (
-            params["mass"],
-            params["grav_const"],
-            params["length"],
-        )
-
-        angle = observation[0, 0]
-        angle_vel = observation[0, 1]
-
-        energy_total = (
-            mass * grav_const * length * (np.cos(angle) - 1) / 2
-            + 1/2 * self.system.pendulum_moment_inertia() * angle_vel**2
-        )
-        energy_control_action = -self.gain * np.sign(angle_vel * energy_total)
-
-        action = hard_switch(
-            signal1=energy_control_action,
-            signal2=-self.pd_coeffs[0] * np.sin(angle) - self.pd_coeffs[1] * angle_vel,
-            condition=np.cos(angle) <= self.switch_loc,
-        )
-
-        return np.array(
-            [
-                [
-                    np.clip(
-                        action,
-                        self.action_min,
-                        self.action_max,
-                    )
-                ]
-            ]
-        )
-
-
-class InvPendulumEnergyBasedFrictionCompensation(Policy):
-
-    def __init__(
-        self,
-        gain: float,
-        action_min: float,
-        action_max: float,
-        switch_loc: float,
-        pd_coeffs: np.ndarray,
-        system: InvertedPendulumWithFriction,
-    ):
-        super().__init__()
-        self.gain = gain
-        self.action_min = action_min
-        self.action_max = action_max
-        self.switch_loc = switch_loc
-        self.pd_coeffs = pd_coeffs
-        self.system = system
-
-    def get_action(self, observation: np.ndarray) -> np.ndarray:
-
-        params = self.system._parameters
-        mass, grav_const, length, friction_coeff = (
-            params["mass"],
-            params["grav_const"],
-            params["length"],
-            params["friction_coeff"],
-        )
-
-        angle = observation[0, 0]
-        angle_vel = observation[0, 1]
-        energy_total = (
-            mass * grav_const * length * (np.cos(angle) - 1) / 2
-            + 1/2 * self.system.pendulum_moment_inertia() * angle_vel**2
-        )
-        energy_control_action = -self.gain * np.sign(
-            angle_vel * energy_total
-        ) + friction_coeff * self.system.pendulum_moment_inertia() * angle_vel * np.abs(
-            angle_vel
-        )
-
-        action = hard_switch(
-            signal1=energy_control_action,
-            signal2=-self.pd_coeffs[0] * np.sin(angle) - self.pd_coeffs[1] * angle_vel,
-            condition=np.cos(angle) <= self.switch_loc,
-        )
-
-        return np.array(
-            [
-                [
-                    np.clip(
-                        action,
-                        self.action_min,
-                        self.action_max,
-                    )
-                ]
-            ]
-        )
-
-
-class InvPendulumEnergyBasedFrictionAdaptive(Policy):
-
-    def __init__(
-        self,
-        gain: float,
-        action_min: float,
-        action_max: float,
-        sampling_time: float,
-        gain_adaptive: float,
-        switch_loc: float,
-        pd_coeffs: list,
-        system: InvertedPendulumWithFriction,
-        friction_coeff_est_init: float = 0,
-    ):
-        super().__init__()
-        self.gain = gain
-        self.action_min = action_min
-        self.action_max = action_max
-        self.friction_coeff_est = friction_coeff_est_init
-        self.sampling_time = sampling_time
-        self.gain_adaptive = gain_adaptive
-        self.switch_loc = switch_loc
-        self.pd_coeffs = pd_coeffs
-        self.system = system
-
-    def get_action(self, observation: np.ndarray) -> np.ndarray:
-
-        params = self.system._parameters
-        mass, grav_const, length = (
-            params["mass"],
-            params["grav_const"],
-            params["length"],
-        )
-
-        angle = observation[0, 0]
-        angle_vel = observation[0, 1]
-
-        energy_total = (
-            mass * grav_const * length * (np.cos(angle) - 1) / 2
-            + 1/2 * self.system.pendulum_moment_inertia() * angle_vel**2
-        )
-        energy_control_action = -self.gain * np.sign(
-            angle_vel * energy_total
-        ) + self.friction_coeff_est * self.system.pendulum_moment_inertia() * angle_vel * np.abs(
-            angle_vel
-        )
-
-        # Parameter adaptation using Euler scheme
-        self.friction_coeff_est += (
-            -self.gain_adaptive
-            * energy_total
-            * mass
-            * length**2
-            * np.abs(angle_vel) ** 3
-            * self.sampling_time
-        )
-
-        action = hard_switch(
-            signal1=energy_control_action,
-            signal2=-self.pd_coeffs[0] * np.sin(angle) - self.pd_coeffs[1] * angle_vel,
-            condition=np.cos(angle) <= self.switch_loc,
-        )
-        return np.array(
-            [
-                [
-                    np.clip(
-                        action,
-                        self.action_min,
-                        self.action_max,
-                    )
-                ]
-            ]
-        )
-
-
-class InvertedPendulumBackstepping(Policy):
-
-    def __init__(
-        self,
-        energy_gain: float,
-        backstepping_gain: float,
-        switch_loc: float,
-        pd_coeffs: list[float],
-        action_min: float,
-        action_max: float,
-        system: InvertedPendulumWithMotor,
-    ):
-
-        super().__init__()
-
-        self.action_min = action_min
-        self.action_max = action_max
-        self.switch_loc = switch_loc
-        self.energy_gain = energy_gain
-        self.backstepping_gain = backstepping_gain
-        self.pd_coeffs = pd_coeffs
-        self.system = system
-
-    def get_action(self, observation: np.ndarray) -> np.ndarray:
-        params = self.system._parameters
-
-        mass, grav_const, length = (
-            params["mass"],
-            params["grav_const"],
-            params["length"],
-        )
-
-        angle = observation[0, 0]
-        angle_vel = observation[0, 1]
-        torque = observation[0, 2]
-
-        energy_total = (
-            mass * grav_const * length * (np.cos(angle) - 1) / 2
-            + 0.5 * self.system.pendulum_moment_inertia() * angle_vel**2
-        )
-        energy_control_action = -self.energy_gain * np.sign(angle_vel * energy_total)
-        backstepping_action = torque - self.backstepping_gain * (
-            torque - energy_control_action
-        )
-        action_pd = -self.pd_coeffs[0] * np.sin(angle) - self.pd_coeffs[1] * angle_vel
-
-        action = hard_switch(
-            signal1=backstepping_action,
-            signal2=action_pd,
-            condition=(np.cos(angle) - 1) ** 2 + angle_vel**2 >= self.switch_loc,
-        )
-
-        return np.array(
-            [
-                [
-                    np.clip(
-                        action,
-                        self.action_min,
-                        self.action_max,
-                    )
-                ]
-            ]
-        )
-
-
-class InvertedPendulumWithMotorPD(Policy):
-
-    def __init__(self, pd_coeffs: list, action_min: float, action_max: float):
-
-        super().__init__()
-
-        self.action_min = action_min
-        self.action_max = action_max
-
-        self.pd_coeffs = pd_coeffs
-
-    def get_action(self, observation: np.ndarray) -> np.ndarray:
-        angle = observation[0, 0]
-        angle_vel = observation[0, 1]
-
-        action = -self.pd_coeffs[0] * angle - self.pd_coeffs[1] * angle_vel
-        return np.array([[np.clip(action, self.action_min, self.action_max)]])
 
 
 class ThreeWheeledRobotKinematicMinGradCLF(Policy):
@@ -437,7 +141,7 @@ class ThreeWheeledRobotDynamicMinGradCLF(ThreeWheeledRobotKinematicMinGradCLF):
         return action
 
 
-class ThreeWheeledRobotNomial(Policy):
+class ThreeWheeledRobotNominal(Policy):
     def __init__(
         self,
         action_bounds: list[list[float]],
@@ -656,8 +360,8 @@ class ThreeWheeledRobotCALFQ(Policy):
         self.critic_weight_change_penalty_coeff = 1.0
 
         if nominal_kappa_params is not None:
-            self.nominal_ctrl = ThreeWheeledRobotNomial(action_bounds=action_bounds,
-                                                        kappa_params=nominal_kappa_params)
+            self.nominal_ctrl = ThreeWheeledRobotNominal(action_bounds=action_bounds,
+                                                         kappa_params=nominal_kappa_params)
 
         self.action_min = np.array( action_bounds[:,0] )
         self.action_max = np.array( action_bounds[:,1] )
@@ -871,11 +575,6 @@ class ThreeWheeledRobotCALFQ(Policy):
             action_prev = self.action_buffer[k - 1, :]
             action_next = self.action_buffer[k, :]
 
-            # observation_prev_safe = self.observation_buffer_safe[k-1, :]
-            # observation_next_safe = self.observation_buffer_safe[k, :]
-            # action_prev_safe = self.action_buffer_safe[k-1, :]
-            # action_next_safe = self.action_buffer_safe[k, :]
-
             critic_prev = self.critic_model(
                 critic_weight_tensor, observation_prev, action_prev
             )
@@ -890,13 +589,6 @@ class ThreeWheeledRobotCALFQ(Policy):
             )
 
             result += 1 / 2 * temporal_error**2
-
-        # result += (
-        #     1
-        #     / 2
-        #     * self.critic_weight_change_penalty_coeff
-        #     * norm(critic_weight_tensor_change) ** 2
-        # )
 
         return result
     
@@ -918,11 +610,6 @@ class ThreeWheeledRobotCALFQ(Policy):
             observation_next = self.observation_buffer[k, :]
             action_prev = self.action_buffer[k - 1, :]
             action_next = self.action_buffer[k, :]
-
-            # observation_prev_safe = self.observation_buffer_safe[k-1, :]
-            # observation_next_safe = self.observation_buffer_safe[k, :]
-            # action_prev_safe = self.action_buffer_safe[k-1, :]
-            # action_next_safe = self.action_buffer_safe[k, :]
 
             critic_prev = self.critic_model(
                 critic_weight_tensor, observation_prev, action_prev
@@ -1227,46 +914,26 @@ class ThreeWheeledRobotCALFQ(Policy):
                 "fatol": 1e-3,
             }  # 'disp': True, 'verbose': 2}
 
-        
-        if False:
-            action_change_start_guess = np.zeros(self.dim_action)
-            bounds = sp.optimize.Bounds(
-                self.action_min, self.action_max, keep_feasible=True
-            )
+        ############################################################ Only focus on this
+        action_start_guess = np.zeros(self.dim_action)
 
-            action_change = minimize(
-                lambda action_change: self.actor_obj(
-                    action_change, critic_weight_tensor, observation
-                ),
-                action_change_start_guess,
-                method=actor_opt_method,
-                tol=1e-3,
-                bounds=bounds,
-                options=actor_opt_options,
-            ).x
+        bounds = sp.optimize.Bounds(
+            self.action_min, self.action_max, keep_feasible=True
+        )
 
-            return self.action_curr + action_change
-        else:
-            ############################################################ Only focus on this
-            action_start_guess = np.zeros(self.dim_action)
+        action = minimize(
+            lambda action: self.actor_obj_2(
+                action, critic_weight_tensor, observation
+            ),
+            action_start_guess,
+            method=actor_opt_method,
+            tol=1e-3,
+            bounds=bounds,
+            options=actor_opt_options,
+        ).x
 
-            bounds = sp.optimize.Bounds(
-                self.action_min, self.action_max, keep_feasible=True
-            )
-
-            action = minimize(
-                lambda action: self.actor_obj_2(
-                    action, critic_weight_tensor, observation
-                ),
-                action_start_guess,
-                method=actor_opt_method,
-                tol=1e-3,
-                bounds=bounds,
-                options=actor_opt_options,
-            ).x
-
-            ############################################################ Only focus on this
-            return np.expand_dims(action, axis=0)
+        ############################################################ Only focus on this
+        return np.expand_dims(action, axis=0)
 
 
     def calf_filter(self, critic_weight_tensor, observation, action, goal_radius_disable_calf=0.2):
@@ -1309,22 +976,6 @@ class ThreeWheeledRobotCALFQ(Policy):
              and norm(observation[0, :2]) > goal_radius_disable_calf)
             or sample <= self.relax_probability
         ):
-            # print("\033[93m") # Color it to indicate CALF
-            # print("new", critic_weight_tensor, observation, action)
-            # print("LG", self.critic_weight_tensor_safe, self.observation_safe, self.action_safe)
-            # print("calf_diff", critic_new, critic_safe)
-            # print("Condition 1: {} - value: {} - LSL: {} - USL: {}".format(
-            #     condition_1, 
-            #     self.calf_diff(critic_weight_tensor, observation, action),
-            #     -self.critic_max_desired_decay,
-            #     -self.critic_desired_decay
-            #     ))
-            # print("Condition 2: {} - value: {}".format(
-            #     condition_2, 
-            #     self.critic_model(critic_weight_tensor, observation, action)
-            #     ))
-            # print("critic_weight_tensor: {} - observation: {}, action: {}".format(critic_weight_tensor, observation, action))
-            
             self.critic_weight_tensor_safe = critic_weight_tensor
             self.observation_safe = observation
             self.action_safe = action
@@ -1340,24 +991,6 @@ class ThreeWheeledRobotCALFQ(Policy):
             return action
 
         else:
-            # print("\033[0m")
-            # print("new", critic_weight_tensor, observation, action)
-            # print("LG", self.critic_weight_tensor_safe, self.observation_safe, self.action_safe)
-            # print("calf_diff", critic_new, critic_safe)
-            # print("Condition 1: {} - value: {} - LSL: {} - USL: {}".format(
-            #     condition_1, 
-            #     self.calf_diff(critic_weight_tensor, observation, action),
-            #     -self.critic_max_desired_decay,
-            #     -self.critic_desired_decay
-            #     )) 
-            # print("Condition 2: {} - value: {} - LKappa: {} - UKappa: {}".format(
-            #     condition_2, 
-            #     self.critic_model(critic_weight_tensor, observation, action),
-            #     critic_low_kappa,
-            #     critic_up_kappa
-            #     ))
-            # print("critic_weight_tensor: {} - observation: {}, action: {}".format(critic_weight_tensor, observation, action))
-
             self.safe_count += 1
             self.log_params["use_calf"] = 0
             return self.get_safe_action(observation)
