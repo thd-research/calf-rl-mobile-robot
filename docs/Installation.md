@@ -36,3 +36,11 @@ To execute the docker container use command:
 If you need additional terminal inside of the Docker open new window in the terminal (Ctrl+Shift+T) and use command
 
     sudo ./into_docker.sh
+
+### 4. Setup ROS workspace
+
+For the first time using `turtlebot3_ws` workspace, it need to be built to set up turtlebot3 packages.
+
+After getting into the docker container, use this command:
+    
+    source turtlebot3_ws/build.bash
