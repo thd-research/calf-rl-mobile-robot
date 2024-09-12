@@ -970,7 +970,7 @@ class ThreeWheeledRobotCALFQ(Policy):
         self.log_params["critic_up_kappa"] = critic_up_kappa
         self.log_params["calf_diff"] = calf_diff
 
-        if not self.nominal_only and (
+        if (
             (condition_1
              and condition_2
              and norm(observation[0, :2]) > goal_radius_disable_calf)
@@ -1011,20 +1011,23 @@ class ThreeWheeledRobotCALFQ(Policy):
             self.current_score * self.action_sampling_time
         )
 
-        # Update action
-        new_action = self.get_optimized_action(self.critic_weight_tensor, observation)
+        if not self.nominal_only:
+            # Update action
+            new_action = self.get_optimized_action(self.critic_weight_tensor, observation)
 
-        # Compute new critic weights
-        self.critic_weight_tensor = self.get_optimized_critic_weights(
-            observation,
-            new_action,
-            use_calf_constraints=True,
-            use_grad_descent=False,
-            use_kappa_constraint=True
-        )
+            # Compute new critic weights
+            self.critic_weight_tensor = self.get_optimized_critic_weights(
+                observation,
+                new_action,
+                use_calf_constraints=True,
+                use_grad_descent=False,
+                use_kappa_constraint=True
+            )
 
-        # Apply CALF filter that checks constraint satisfaction and updates the CALF's state
-        action = self.calf_filter(self.critic_weight_tensor, observation, new_action)
+            # Apply CALF filter that checks constraint satisfaction and updates the CALF's state
+            action = self.calf_filter(self.critic_weight_tensor, observation, new_action)
+        else:
+            action = self.get_safe_action(observation)
 
         # DEBUG
         # action = self.get_safe_action(observation)

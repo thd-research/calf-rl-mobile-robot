@@ -476,12 +476,12 @@ class MyScenario(ROSMiddleScenario):
             "action": self.get_action_from_policy(),
             "running_objective": self.policy.score,
             "current_value": self.policy.current_score,
-            "use_calf": self.policy.log_params["use_calf"],
-            "critic_new": self.policy.log_params["critic_new"],
-            "critic_safe": self.policy.log_params["critic_safe"],
-            "critic_low_kappa": self.policy.log_params["critic_low_kappa"],
-            "critic_up_kappa": self.policy.log_params["critic_up_kappa"],
-            "calf_diff": self.policy.log_params["calf_diff"]
+            "use_calf": self.policy.log_params.get("use_calf"),
+            "critic_new": self.policy.log_params.get("critic_new"),
+            "critic_safe": self.policy.log_params.get("critic_safe"),
+            "critic_low_kappa": self.policy.log_params.get("critic_low_kappa"),
+            "critic_up_kappa": self.policy.log_params.get("critic_up_kappa"),
+            "calf_diff": self.policy.log_params.get("calf_diff"),
         }
     
 
