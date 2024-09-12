@@ -114,6 +114,7 @@ RUN pip3 uninstall -y pyqt5
 COPY ../dev-requirements.txt /requirements.txt
 RUN python3.10 -m pip install -r /requirements.txt
 
+RUN git config --global --add safe.directory /regelum-ws
 RUN git config --global --add safe.directory /regelum-playground
 RUN git config --global --add safe.directory /regelum-control
 
