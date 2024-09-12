@@ -15,6 +15,7 @@
     - [2. SARSA-m](#2-sarsa-m-1)
     - [3. PPO](#3-ppo-1)
     - [4. Nominal](#4-nominal)
+    - [5. MPC](#5-mpc)
 
 
 # Setup
@@ -61,7 +62,8 @@ python3.10 run.py \
            scenario=my_scenario \
            system=3wrobot_kin_with_spot \
            common.sampling_time=0.1 \
-           simulator.time_final=40 \scenario.N_iterations=40 \
+           simulator.time_final=50 \
+           scenario.N_iterations=40 \
            --single-thread \
            --experiment=calf_report \
            policy.critic_desired_decay=1e-6 \
@@ -136,7 +138,7 @@ python3.10 run.py \
            scenario.discount_factor=0.9 \
            scenario.cliprange=0.2 \
            scenario.critic_td_n=1 \
-           simulator.time_final=30 \
+           simulator.time_final=50 \
            common.sampling_time=0.1
 ```
 
@@ -155,10 +157,9 @@ python3.10 run.py \
            scenario=my_scenario \
            system=3wrobot_kin_with_spot \
            common.sampling_time=0.1 \
-           simulator.time_final=40 scenario.N_iterations=1 \
+           simulator.time_final=50 scenario.N_iterations=1 \
            --single-thread \
-           --jobs=-1 \
-           --experiment=calf_report \
+           --experiment=benchmark \
            policy.critic_desired_decay=1e-6 \
            policy.critic_low_kappa_coeff=1e-1 \
            policy.critic_up_kappa_coeff=1e3 \
@@ -166,7 +167,7 @@ python3.10 run.py \
            policy.step_size_multiplier=5 \
            policy.weight_path="/regelum-ws/checkpoints/calf_240829/policy/model_it_00015.npy" \
            policy.nominal_only=False \
-           simulator.use_phy_robot=true \
+           simulator.use_phy_robot=false \
            --interactive
 ```
 
@@ -182,17 +183,17 @@ python3.10 run.py \
             scenario=my_scenario \
             system=3wrobot_kin_with_spot \
             common.sampling_time=0.1 \
-            simulator.time_final=70 \
+            simulator.time_final=50 \
             scenario.N_iterations=1 \
             --single-thread \
-            --experiment=sarsa_m_init_ros \
+            --experiment=benchmark \
             policy.critic_desired_decay=1e-6 \
             policy.critic_low_kappa_coeff=1e-1 \
             policy.critic_up_kappa_coeff=4e2 \
             policy.penalty_factor=1e2 \
             policy.step_size_multiplier=5 \
             policy.weight_path="/regelum-ws/checkpoints/sarsa_m_240830/policy/model_it_00033.npy" \
-            simulator.use_phy_robot=true \
+            simulator.use_phy_robot=false \
             --interactive
 
 ```
@@ -206,7 +207,7 @@ python3.10 run.py \
         scenario=ppo_scenario \
         system=3wrobot_kin_customized \
         --single-thread \
-        --experiment=ppo_report \
+        --experiment=benchmark \
         scenario.N_episodes=1 \
         scenario.N_iterations=1 \
         scenario.policy_n_epochs=50 \
@@ -245,6 +246,26 @@ python3.10 run.py \
            +policy.nominal_kappa_params="[0.2, 1.5, -.15]" \
            policy.nominal_only=True \
            common.sampling_time=0.1 \
+           simulator.use_phy_robot=false \
            --single-thread \
-           --experiment=nominal_controller_ros
+           --experiment=benchmark
+```
+
+### 5. MPC
+
+```
+python3.10 run.py \
+            +seed=8 \
+            simulator=ros \
+            initial_conditions=3wrobot_kin_customized \
+            system=3wrobot_kin_with_spot \
+            scenario=mpc_scenario_customized \
+            scenario.running_objective.spot_gain=100 \
+            scenario.prediction_horizon=10 \
+            scenario.prediction_step_size=4 \
+            common.sampling_time=.1 \
+            simulator.time_final=50 \
+            simulator.use_phy_robot=false \
+            --interactive \
+            --experiment=benchmark
 ```

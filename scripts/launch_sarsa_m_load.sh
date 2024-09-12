@@ -7,7 +7,7 @@ python3.10 run.py \
             scenario=my_scenario \
             system=3wrobot_kin_with_spot \
             common.sampling_time=0.1 \
-            simulator.time_final=70 \
+            simulator.time_final=50 \
             scenario.N_iterations=1 \
             --single-thread \
             --experiment=sarsa_m_init_ros \
