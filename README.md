@@ -1,6 +1,6 @@
 >**About**
 
-This repository contains the codes for our CALF paper empowered by the `Regelum` framework. The main purpose is to validate CALF performance and it's relative SARSA-m over well-known controllers namely PPO, MPC, and Nominal controller.
+This repository contains the codes for our CALF paper empowered by the [Regelum](https://github.com/osinenkop/regelum-control) framework. The main purpose is to validate CALF performance and it's relative SARSA-m over well-known controllers namely PPO, MPC, and Nominal controller.
 
 For more details, please refer to the paper.
 
@@ -365,4 +365,21 @@ python3.10 run.py \
            simulator.use_phy_robot=true \
            --single-thread \
            --experiment=benchmark
+```
+# Licence
+
+This project is licensed under the terms of the [MIT license](https://github.com/osinenkop/regelum-control/blob/main/LICENSE).
+
+## Bibtex reference
+
+Thank you for citing [Regelum control](https://github.com/osinenkop/regelum-control) if you use any of this code.
+
+```
+@misc{regelum2024,
+author =   {Pavel Osinenko, Grigory Yaremenko, Georgiy Malaniya, Anton Bolychev},
+title =    {Regelum: a framework for simulation, control and reinforcement learning},
+howpublished = {\url{https://github.com/osinekop/regelum-control}},
+year = {2024},
+note = {Licensed under the MIT License}
+}
 ```
