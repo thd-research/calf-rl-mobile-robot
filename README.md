@@ -27,9 +27,7 @@ All the reproduction steps can be found [here](docs/get_started.md).
 
 At the end of this experiment, the turtlebot is capaple of reaching the goal without passing the "hot" spot.
 
-<video width="640" height="480" controls>
-  <source src="media/turtlebot_ctrls_combination.mp4" type="video/mp4">
-</video>
+[![video of controllers trajectories](https://img.youtube.com/vi/RgiDHzE5-w8/0.jpg)](https://www.youtube.com/watch?v=RgiDHzE5-w8)
 
 
 # Plots
