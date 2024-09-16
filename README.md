@@ -9,6 +9,11 @@ For more details, please refer to the paper.
 - [Getting Started](#getting-started)
 - [Experimental achievement](#experimental-achievement)
 - [Plots](#plots)
+  - [PPO](#ppo)
+  - [SARSA-m](#sarsar-m)
+  - [CALF](#calf)
+  - [Parking position error](#parking-position-error)
+
 - [Analysis](#analysis)
 - [Remark](#remark)
 - [Licence](#licence)
@@ -36,22 +41,32 @@ At the end of this experiment, the turtlebot is capaple of reaching the goal wit
 
 PPO has unstable performances. Despite some runs successfully parking nearby the target, the rest keeps a certain distance away from the goal area.
 
+On the left side, `PPO_full` trajectories are raw trajectories from PPO derived mentioned behaviors.
+
+On the right side, supposing that all the robot stops when reaching the area around the target x=0, y=0 a radius of 0.12 meter, `PPO_simplified` depicts top 10 trajectories satisfying that parking condition.
+
 <img src="media/report_PPO_full_trajectory.svg" width="415"/> <img src="media/report_PPO_simplified_trajectory.svg" width="425"/> 
 
-<img src="media/PPO_top_20_distance_from_goal.svg" width="425"/>  <img src="media/PPO_simplified_top_10_distance_from_goal.svg" width="422"/> 
-
 ## SARSA-m
+
+These 2 figures show unpredictable runs of SARSA-m with top 20 and top 10 runs having lowest accumulated cost. To see how many runs can reach the goal, please have a look at [this histogram](#parking-position-error).
 
 
 <img src="media/report_SARSA-m top20_trajectory.svg" width="425"/> <img src="media/report_SARSA-m_trajectory.svg" width="415"/> 
 
-<img src="media/SARSA-m_top_20_distance_from_goal.svg" width="600"/> 
-
 ## CALF
+
+Robot always targets the goal with CALF controllers. These 2 figure are top 20 and top 10 runs having lowest accumulated cost.
 
 <img src="media/report_CALF_top20_trajectory.svg" width="425"/> <img src="media/report_CALF_trajectory.svg" width="425"/>
 
-<img src="media/CALF_top_20_distance_from_goal.svg" width="600"/> 
+## Parking position error
+
+Here is the comparison of the successfully parking frequency of proposed controllers.  
+
+<img src="media/combined_hist_top_20_of_all_controllers:_distance_from_goal.svg" /> 
+<img src="media/combined_hist_selected_top_10_of_all_controllers:_distance_from_goal.svg" />
+
 
 # Analysis
 
