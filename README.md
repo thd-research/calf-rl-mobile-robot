@@ -32,6 +32,27 @@ At the end of this experiment, the turtlebot is capaple of reaching the goal wit
 
 # Plots
 
+## PPO
+
+PPO has unstable performances. Despite some runs successfully parking nearby the target, the rest keeps a certain distance away from the goal area.
+
+<img src="media/report_PPO_full_trajectory.svg" width="415"/> <img src="media/report_PPO_simplified_trajectory.svg" width="425"/> 
+
+<img src="media/PPO_top_20_distance_from_goal.svg" width="425"/>  <img src="media/PPO_simplified_top_10_distance_from_goal.svg" width="422"/> 
+
+## SARSA-m
+
+
+<img src="media/report_SARSA-m top20_trajectory.svg" width="425"/> <img src="media/report_SARSA-m_trajectory.svg" width="415"/> 
+
+<img src="media/SARSA-m_top_20_distance_from_goal.svg" width="600"/> 
+
+## CALF
+
+<img src="media/report_CALF_top20_trajectory.svg" width="425"/> <img src="media/report_CALF_trajectory.svg" width="425"/>
+
+<img src="media/CALF_top_20_distance_from_goal.svg" width="600"/> 
+
 # Analysis
 
 # Remark
