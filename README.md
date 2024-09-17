@@ -32,8 +32,8 @@ All the setting up and reproduction steps can be found [here](docs/get_started.m
 
 At the end of this experiment, the turtlebot is capaple of reaching the goal without passing the "hot" spot.
 
-[![video of controllers trajectories](https://img.youtube.com/vi/RgiDHzE5-w8/0.jpg)](https://www.youtube.com/watch?v=RgiDHzE5-w8)
 
+<img src="media/CALF_SARSA-m turtlebot experiments.gif"/>
 
 # Plots
 
