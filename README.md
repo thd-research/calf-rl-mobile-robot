@@ -1,6 +1,6 @@
 >**About**
 
-This repository contains the codes for our ICRA25 submission **"A novel agent with formal goal-reaching guarantees: an experimental study with a mobile robot"** empowered by the [Regelum](https://github.com/osinenkop/regelum-control) framework. The main purpose is to validate CALF performance and it's relative SARSA-m over well-known controllers namely PPO, MPC, and Nominal controller.
+This repository contains the codes for our CALF paper empowered by the [Regelum](https://github.com/osinenkop/regelum-control) framework. The main purpose is to validate CALF performance and it's relative SARSA-m over well-known controllers namely PPO, MPC, and Nominal controller.
 
 For more details, please refer to the paper.
 
@@ -21,8 +21,9 @@ For more details, please refer to the paper.
 
 # Method Overview
 
-<img src="media/experiment_diagram.svg" width="1000" />
-
+<div align="center">
+<img src="media/experiment_diagram.svg" width="850" />
+</div>
 
 # Getting Started
 
@@ -32,8 +33,9 @@ All the setting up and reproduction steps can be found [here](docs/get_started.m
 
 At the end of this experiment, the turtlebot is capaple of reaching the goal without passing the "hot" spot.
 
-
+<div align="center">
 <img src="media/CALF_SARSA-m turtlebot experiments.gif"/>
+</div>
 
 # Plots
 
@@ -45,29 +47,33 @@ On the left side, `PPO_full` trajectories are raw trajectories from PPO derived 
 
 On the right side, supposing that all the robot stops when reaching the area around the target x=0, y=0 a radius of 0.12 meter, `PPO_simplified` depicts top 10 trajectories satisfying that parking condition.
 
-<img src="media/report_PPO_full_trajectory.svg" width="385"/> <img src="media/report_PPO_simplified_trajectory.svg" width="400"/> 
+<div align="center">
+<img src="media/report_PPO_full_trajectory.svg" width="482"/> <img src="media/report_PPO_simplified_trajectory.svg" width="496"/>
+</div>
 
 ## SARSA-m
 
 These 2 figures show unpredictable runs of SARSA-m with top 20 and top 10 runs having lowest accumulated cost. To see how many runs can reach the goal, please have a look at [this histogram](#parking-position-error).
 
-
-<img src="media/report_SARSA-m top20_trajectory.svg" width="400"/> <img src="media/report_SARSA-m_trajectory.svg" width="385"/> 
+<div align="center">
+<img src="media/report_SARSA-m top20_trajectory.svg" width="502"/> <img src="media/report_SARSA-m_trajectory.svg" width="489.4"/>
+</div>
 
 ## CALF
 
 Robot always targets the goal with CALF controllers. These 2 figure are top 20 and top 10 runs having lowest accumulated cost.
 
-<img src="media/report_CALF_top20_trajectory.svg" width="400"/> <img src="media/report_CALF_trajectory.svg" width="400"/>
+<div align="center">
+<img src="media/report_CALF_top20_trajectory.svg" width="482"/> <img src="media/report_CALF_trajectory.svg" width="482"/>
+</div>
 
 ## Parking position error
 
-The below Histograms, which have the bin witdh of 0.01 meter, are the comparison of the successfully parking frequency of proposed controllers. Overall, CALF is totally successfull in parking at the goal, and 17 of 20 runs of SARSA-m could reach the goal while PPO needs a condition of stopping at the target area to meet the goal.
+Here is the comparison of the successfully parking frequency of proposed controllers. Overall, CALF is totally successfull in parking at the goal, and 17 of 20 runs of SARSA-m could reach the goal while PPO needs a condition of stopping at the target area to meet the goal.
 
-
-<img src="media/combined_hist_top_20_of_all_controllers:_distance_from_goal.svg" /> 
-<img src="media/combined_hist_selected_top_10_of_all_controllers:_distance_from_goal.svg" />
-
+<div align="center">
+<img src="media/combined_hist_top_20_of_all_controllers:_distance_from_goal.svg" width="489"/> <img src="media/combined_hist_selected_top_10_of_all_controllers:_distance_from_goal.svg" width="480"/>
+</div>
 
 # Analysis
 
@@ -101,6 +107,7 @@ The behavior of all controllers in reaching the goal was entirely driven by the 
 # Licence
 
 This project is licensed under the terms of the [MIT license](https://github.com/osinenkop/regelum-control/blob/main/LICENSE).
+
 
 ## Reference
 Our experiment is based on Regelum with following credit.
