@@ -1,0 +1,4 @@
+state_goal: = np.array([1, 1, 0.0001])
+state_init: = np.array([-1., -1., 0.0001])
+# kappa_params: = [0.15, 0.17, -0.2]
+kappa_params: = [2, 15, -1.50]

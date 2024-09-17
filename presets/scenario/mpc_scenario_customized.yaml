@@ -1,0 +1,17 @@
+_target_: src.scenario.RosMPC
+
+prediction_horizon: 10
+prediction_step_size: $ common.sampling_time
+simulator: ~ simulator
+sampling_time: $ common.sampling_time
+running_objective:
+  _target_: src.objective.ThreeWheeledRobotCostWithSpot
+  quadratic_model:
+    _target_: regelum.model.ModelQuadLin
+    weights: = numpy.array([100., 100., 1, 0, 0])
+    quad_matrix_type: diagonal
+    is_with_linear_terms: False
+  spot_gain: 100
+  spot_x_center: -0.5
+  spot_y_center: -0.5
+  spot_std: 0.1

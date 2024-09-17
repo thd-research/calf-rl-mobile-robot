@@ -1,0 +1,13 @@
+_target_: src.policy.ThreeWheeledRobotSARSA_M
+
+# action_bounds: = np.array([[-0.22, 0.22], [-2.84, 2.84]])
+system: ~ system
+R1_diag: = [100, 100, 1, 0, 0]
+weight_path: = None
+critic_desired_decay: = 1e-5
+critic_low_kappa_coeff: = 1e-1
+critic_up_kappa_coeff: = 1e3
+penalty_factor: = 1e1
+step_size_multiplier: = 1
+nominal_only: = False
+nominal_kappa_params: = None

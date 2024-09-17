@@ -1,0 +1,9 @@
+_target_: src.simulator.RosTurtlebot
+
+system: ~ system
+state_goal: $ initial_conditions.state_goal
+state_init: $ initial_conditions.state_init
+time_final: $ common.time_final
+max_step: $ common.sampling_time
+stop_if_reach_target: false
+use_phy_robot: false
