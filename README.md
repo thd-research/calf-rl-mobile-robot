@@ -48,7 +48,7 @@ On the left side, `PPO_full` trajectories are raw trajectories from PPO derived 
 On the right side, supposing that all the robot stops when reaching the area around the target x=0, y=0 a radius of 0.12 meter, `PPO_simplified` depicts top 10 trajectories satisfying that parking condition.
 
 <div align="center">
-<img src="media/report_PPO_full_trajectory.svg" width="402"/> <img src="media/report_PPO_simplified_trajectory.svg" width="416"/>
+<img src="media/report_PPO_full_trajectory.svg" width="402.9"/> <img src="media/report_PPO_simplified_trajectory.svg" width="416"/>
 </div>
 
 ## SARSA-m
@@ -56,7 +56,7 @@ On the right side, supposing that all the robot stops when reaching the area aro
 These 2 figures show unpredictable runs of SARSA-m with top 20 and top 10 runs having lowest accumulated cost. To see how many runs can reach the goal, please have a look at [this histogram](#parking-position-error).
 
 <div align="center">
-<img src="media/report_SARSA-m top20_trajectory.svg" width="402"/> <img src="media/report_SARSA-m_trajectory.svg" width="389.4"/>
+<img src="media/report_SARSA-m top20_trajectory.svg" width="402"/> <img src="media/report_SARSA-m_trajectory.svg" width="392"/>
 </div>
 
 ## CALF
@@ -72,7 +72,7 @@ Robot always targets the goal with CALF controllers. These 2 figure are top 20 a
 Here is the comparison of the successfully parking frequency of proposed controllers. Overall, CALF is totally successfull in parking at the goal, and 17 of 20 runs of SARSA-m could reach the goal while PPO needs a condition of stopping at the target area to meet the goal.
 
 <div align="center">
-<img src="media/combined_hist_top_20_of_all_controllers:_distance_from_goal.svg" width="359"/> <img src="media/combined_hist_selected_top_10_of_all_controllers:_distance_from_goal.svg" width="352"/>
+<img src="media/combined_hist_top_20_of_all_controllers:_distance_from_goal.svg" width="359"/> <img src="media/combined_hist_selected_top_10_of_all_controllers:_distance_from_goal.svg" width="353"/>
 </div>
 
 # Analysis
