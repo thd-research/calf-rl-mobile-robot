@@ -1,6 +1,6 @@
 >**About**
 
-This repository contains the codes for our CALF paper empowered by the [Regelum](https://github.com/osinenkop/regelum-control) framework. The main purpose is to validate CALF performance and it's relative SARSA-m over well-known controllers namely PPO, MPC, and Nominal controller.
+This repository contains the codes for our CALF paper, which is empowered by the [Regelum](https://github.com/osinenkop/regelum-control) framework. The main purpose is to validate CALF performance and its relative SARSA-m over well-known controllers such as PPO, MPC, and Nominal controller.
 
 For more details, please refer to the paper.
 
@@ -31,13 +31,13 @@ For more details, please refer to the paper.
 
 
 # Getting Started
-This repository is aimed to perform all the tasks in a docker container. Details of running and attaching the docker container can be found [here](installation.md#3-run-docker).
+This repository aims to perform all the tasks in a Docker container. Details of running and attaching the Docker container can be found [here](installation.md#3-run-docker).
 
 **ALL THE FOLLOWING COMMANDS HAVE TO BE USED INSIDE DOCKER CONTAINTER.**
 
 ## Simulation in Gazebo
 
-To launch Turtlebot3 simulation in Gazebo
+To launch the Turtlebot3 simulation in Gazebo
 
 ``` bash
 roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
@@ -45,7 +45,7 @@ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 
 ## Perform learning process in Gazebo
 
-Open another Terminal, to navigate to the workspace folder inside docker.
+Open another Terminal to navigate to the workspace folder inside docker.
 
 ``` bash
 cd regelum-ws
@@ -152,7 +152,7 @@ python3.10 run.py \
 ```
 
 ## Perform Nonimal, MPC controllers and CALF, SARSA-m, PPO controllers with checkpoints
-To run the robot with a given checkpoint, we reset the value of N_iterations and N_episode to 1 and provide checkpoint paths where weights matrix was stored to `policy.weight_path` or/and `critic.weight_path` if that controller requires.
+To run the robot with a given checkpoint, we reset the value of N_iterations and N_episode to 1 and provide checkpoint paths where the weight matrix was stored to `policy.weight_path` or/and `critic.weight_path` if that controller requires.
 
 ### 1. CALF
 
@@ -281,15 +281,15 @@ python3.10 run.py \
 
 ## Monitor training progress and Pick checkpoints
 
-To monitor the performance of each controller and pick the best checkpoint over iteration or over hyperparameters, we utilize the advance of MLFlow interface.
+We utilize the advantage of the MLFlow interface to monitor the performance of each controller and select the best checkpoint over iteration or hyperparameters.
 
-Open a new terminal and get into the docker container, and execute these commands:
+Open a new terminal, get into the Docker container, and execute these commands:
 ```
 cd regelum-ws/regelum_data
 mlflow ui
 ```
 
-Then the output on your terminal would be like:
+The output on your terminal would be like:
 
 ```
 [2024-09-17 09:05:16 +0200] [73632] [INFO] Starting gunicorn 20.1.0
@@ -304,7 +304,7 @@ Then the output on your terminal would be like:
 
 Click on the URL `http://127.0.0.1:5000` and then MLFlow interface will pop-up in your browser.
 
-Weight matrices of each controller are stored in different path as described below:
+Weight matrices of each controller are stored in different paths as described below:
 
 1. CALF and SARSA-m
 ```
@@ -334,12 +334,12 @@ For example:
 
 ## Perform the proposed controllers on Turtlebot3 in real-world
 
-The CALF, SARSA-m and PPO controllers should be trained on Gazebo simulation environment firstly. Then the best checkpoint is chosen manually based on the accumulative cost displayed on the MLFlow UI.
+First, the CALF, SARSA-m, and PPO controllers should be trained in the Gazebo simulation environment. Then, the best checkpoint is chosen manually based on the accumulative cost displayed on the MLFlow UI.
 
 ### Turtlebot setup
-To control physical turtlebot, we need to connect the PC running Regelum controllers and the turtlebot to the same Wifi access point. 
+To control the physical Turtlebot, we need to connect the PC running Regelum controllers and the Turtlebot to the same Wi-Fi access point. 
 
-**NOTE: The Turtlebot in Gazebo is not allowed to run while we run the turtlebot in real-world.**
+**NOTE: The Turtlebot in Gazebo is not allowed to run while we run the Turtlebot in the real-world.**
 
 1. Network configuration: Follow the instruction [here](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#network-configuration), find the assigned IP address of your PC (i.e. `192.168.122.11`) and execute these commands: (inside docker container)
 ```
