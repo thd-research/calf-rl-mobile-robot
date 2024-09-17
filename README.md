@@ -45,20 +45,20 @@ On the left side, `PPO_full` trajectories are raw trajectories from PPO derived 
 
 On the right side, supposing that all the robot stops when reaching the area around the target x=0, y=0 a radius of 0.12 meter, `PPO_simplified` depicts top 10 trajectories satisfying that parking condition.
 
-<img src="media/report_PPO_full_trajectory.svg" width="400"/> <img src="media/report_PPO_simplified_trajectory.svg" width="400"/> 
+<img src="media/report_PPO_full_trajectory.svg" width="385"/> <img src="media/report_PPO_simplified_trajectory.svg" width="400"/> 
 
 ## SARSA-m
 
 These 2 figures show unpredictable runs of SARSA-m with top 20 and top 10 runs having lowest accumulated cost. To see how many runs can reach the goal, please have a look at [this histogram](#parking-position-error).
 
 
-<img src="media/report_SARSA-m top20_trajectory.svg" width="425"/> <img src="media/report_SARSA-m_trajectory.svg" width="415"/> 
+<img src="media/report_SARSA-m top20_trajectory.svg" width="400"/> <img src="media/report_SARSA-m_trajectory.svg" width="385"/> 
 
 ## CALF
 
 Robot always targets the goal with CALF controllers. These 2 figure are top 20 and top 10 runs having lowest accumulated cost.
 
-<img src="media/report_CALF_top20_trajectory.svg" width="425"/> <img src="media/report_CALF_trajectory.svg" width="425"/>
+<img src="media/report_CALF_top20_trajectory.svg" width="400"/> <img src="media/report_CALF_trajectory.svg" width="400"/>
 
 ## Parking position error
 
