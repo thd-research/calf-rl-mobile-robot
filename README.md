@@ -62,7 +62,8 @@ Robot always targets the goal with CALF controllers. These 2 figure are top 20 a
 
 ## Parking position error
 
-The below Histograms are the comparison of the successfully parking frequency of proposed controllers. Overall, CALF is totally successfull in parking at the goal, and 17 of 20 runs of SARSA-m could reach the goal while PPO needs a condition of stopping at the target area to meet the goal.
+The below Histograms, which have the bin witdh of 0.01 meter, are the comparison of the successfully parking frequency of proposed controllers. Overall, CALF is totally successfull in parking at the goal, and 17 of 20 runs of SARSA-m could reach the goal while PPO needs a condition of stopping at the target area to meet the goal.
+
 
 <img src="media/combined_hist_top_20_of_all_controllers:_distance_from_goal.svg" /> 
 <img src="media/combined_hist_selected_top_10_of_all_controllers:_distance_from_goal.svg" />
