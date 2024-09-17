@@ -62,13 +62,36 @@ Robot always targets the goal with CALF controllers. These 2 figure are top 20 a
 
 ## Parking position error
 
-Here is the comparison of the successfully parking frequency of proposed controllers.  
+Here is the comparison of the successfully parking frequency of proposed controllers. Overall, CALF is totally successfull in parking at the goal, and 17 of 20 runs of SARSA-m could reach the goal while PPO needs a condition of stopping at the target area to meet the goal.
 
 <img src="media/combined_hist_top_20_of_all_controllers:_distance_from_goal.svg" /> 
 <img src="media/combined_hist_selected_top_10_of_all_controllers:_distance_from_goal.svg" />
 
 
 # Analysis
+
+A simple notebook was written for controllers performance monitoring and analysis.
+
+Due to the storing stucture of regelum, datetime format to pick up a checkpoint is utilized as below.
+
+To load single checkpoint:
+```
+start_datetime_str = end_datetime_str = "2024-08-29 16-29-17"
+```
+
+
+To load multi-checkpoints:
+
+```
+start_datetime_str = "2024-08-29 16-29-17"
+end_datetime_str = "2024-08-30 06-07-04"
+```
+
+All possible checkpoints could be found by using [MLFlow](docs/installation.md#monitor-training-progress-and-pick-checkpoints).
+
+The above loading mechanism is used in this [Jupyter Notebook](notebooks/simple_plotting.ipynb) where show trajectories, learning curves, accumulated cost over time, and control signals.
+
+NOTE: `regelum-control` should be installed in a jupyter kernel server.
 
 # Remark
 

@@ -289,7 +289,20 @@ cd regelum-ws/regelum_data
 mlflow ui
 ```
 
-Then MLFlow will pop-up in your browser.
+Then the output on your terminal would be like:
+
+```
+[2024-09-17 09:05:16 +0200] [73632] [INFO] Starting gunicorn 20.1.0
+[2024-09-17 09:05:16 +0200] [73632] [INFO] Listening at: http://127.0.0.1:5000 (73632)
+[2024-09-17 09:05:16 +0200] [73632] [INFO] Using worker: sync
+[2024-09-17 09:05:16 +0200] [73633] [INFO] Booting worker with pid: 73633
+[2024-09-17 09:05:16 +0200] [73634] [INFO] Booting worker with pid: 73634
+[2024-09-17 09:05:16 +0200] [73666] [INFO] Booting worker with pid: 73666
+[2024-09-17 09:05:16 +0200] [73668] [INFO] Booting worker with pid: 73668
+```
+
+
+Click on the URL `http://127.0.0.1:5000` and then MLFlow interface will pop-up in your browser.
 
 Weight matrices of each controller are stored in different path as described below:
 
