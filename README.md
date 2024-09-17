@@ -26,7 +26,7 @@ For more details, please refer to the paper.
 
 # Getting Started
 
-All the reproduction steps can be found [here](docs/get_started.md).
+All the setting up and reproduction steps can be found [here](docs/get_started.md).
 
 # Experimental achievement
 

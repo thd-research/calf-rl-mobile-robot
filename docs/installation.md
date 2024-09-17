@@ -23,7 +23,7 @@ The installation of docker should complete correctly. If docker does not install
     
 We must first create the environment in which our program will run. We already have a ready-made environment and we just need to building it:
 
-    sudo ./build_docker.sh
+    source ./build_docker.sh
 
 Next will begin the process of building. If the process ends incorrectly or with an error, you must start building again.
 
@@ -31,11 +31,11 @@ Next will begin the process of building. If the process ends incorrectly or with
 
 To execute the docker container use command:
 
-    sudo ./run_docker.sh
+    source ./run_docker.sh
     
 If you need additional terminal inside of the Docker open new window in the terminal (Ctrl+Shift+T) and use command
 
-    sudo ./into_docker.sh
+    source ./into_docker.sh
 
 ### 4. Setup ROS workspace
 

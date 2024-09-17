@@ -27,11 +27,11 @@ For more details, please refer to the paper.
 
 
 # Setup
-[Installation guildlines](docs/installation.md)
+[Installation guildlines](installation.md)
 
 
 # Getting Started
-This repository is aimed to perform all the tasks in a docker container. Details of running and attaching the docker container can be found [here](docs/Installation.md#3-run-docker).
+This repository is aimed to perform all the tasks in a docker container. Details of running and attaching the docker container can be found [here](installation.md#3-run-docker).
 
 **ALL THE FOLLOWING COMMANDS HAVE TO BE USED INSIDE DOCKER CONTAINTER.**
 
