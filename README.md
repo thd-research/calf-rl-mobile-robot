@@ -45,7 +45,7 @@ On the left side, `PPO_full` trajectories are raw trajectories from PPO derived 
 
 On the right side, supposing that all the robot stops when reaching the area around the target x=0, y=0 a radius of 0.12 meter, `PPO_simplified` depicts top 10 trajectories satisfying that parking condition.
 
-<img src="media/report_PPO_full_trajectory.svg" width="415"/> <img src="media/report_PPO_simplified_trajectory.svg" width="425"/> 
+<img src="media/report_PPO_full_trajectory.svg" width="400"/> <img src="media/report_PPO_simplified_trajectory.svg" width="400"/> 
 
 ## SARSA-m
 
