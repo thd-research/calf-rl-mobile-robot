@@ -31,7 +31,7 @@ All the setting up and reproduction steps can be found [here](docs/get_started.m
 
 # Experimental achievement
 
-At the end of this experiment, the turtlebot is capaple of reaching the goal without passing the "hot" spot.
+At the end of this [experiment](https://www.youtube.com/watch?v=RgiDHzE5-w8&ab_channel=RomanZashchitin), the turtlebot is capaple of reaching the goal without passing the "hot" spot.
 
 <div align="center">
 <img src="media/CALF_SARSA-m turtlebot experiments.gif"/>
