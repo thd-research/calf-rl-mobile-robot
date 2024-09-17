@@ -127,10 +127,10 @@ If you use our code for you projects please give us a credit:
 and here the bibtex entry for our repo
 
 ```
-@misc{regelum2024,
-author =   {Pavel Osinenko, Grigory Yaremenko, Georgiy Malaniya, Anton Bolychev},
-title =    {Regelum: a framework for simulation, control and reinforcement learning},
-howpublished = {\url{https://github.com/osinekop/regelum-control}},
+@misc{calfrobot2024,
+author =   {Grigory Yaremenko, Dmitrii Dobriborsci, Roman Zashchitin, Ruben Contreras Maestre, Ngoc Quoc Huy Hoang, Pavel Osinenko},
+title =    {A novel agent with formal goal-reaching guarantees: an experimental study with a mobile robot},
+howpublished = {\url{https://github.com/thd-research/calf-rl-mobile-robot}},
 year = {2024},
 note = {Licensed under the MIT License}
 }
