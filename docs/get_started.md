@@ -12,7 +12,7 @@ For more details, please refer to the paper.
     - [1. CALF](#1-calf)
     - [2. SARSA-m](#2-sarsa-m)
     - [3. PPO](#3-ppo)
-  - [Perform Nonimal, MPC controllers and CALF, SARSA-m, PPO controllers with checkpoints](#perform-nonimal-mpc-controllers-and-calf-sarsa-m-ppo-controllers-with-checkpoints)
+  - [Perform Nominal, MPC controllers and CALF, SARSA-m, PPO controllers with checkpoints](#perform-nonimal-mpc-controllers-and-calf-sarsa-m-ppo-controllers-with-checkpoints)
     - [1. CALF](#1-calf-1)
     - [2. SARSA-m](#2-sarsa-m-1)
     - [3. PPO](#3-ppo-1)
