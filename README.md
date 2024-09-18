@@ -129,7 +129,7 @@ note = {Licensed under the MIT License}
 
 ## Bibtex cite
 
-If you use our code for your projects, please give us a credit:
+If you use our code for your projects, please give us credit:
 and here is the Bibtex entry for our repo
 
 ```
