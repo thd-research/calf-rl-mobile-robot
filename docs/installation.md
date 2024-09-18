@@ -11,7 +11,7 @@ You need to go into the downloaded folder and go into the docker folder.
 
     cd ./docker
 
-If you don't have an Nvidia graphics card, run the command:
+If you don't have a Nvidia graphics card, run the command:
 
     ./install_docker.bash
 
@@ -25,11 +25,11 @@ We must first create the environment in which our program will run. We already h
 
     source ./build_docker.sh
 
-Next, you will begin the building process. If the process ends incorrectly or with an error, you must start again.
+Next, you will begin the building process. You must start again if the process ends incorrectly or with an error.
 
 ### 3. Run Docker
 
-To execute the docker container, use the command:
+To execute the Docker container, use the command:
 
     source ./run_docker.sh
     
@@ -41,6 +41,6 @@ If you need an additional terminal inside Docker, open a new window in the termi
 
 If you are using the `turtlebot3_ws` workspace for the first time, it needs to be built to set up turtlebot3 packages.
 
-After getting into the docker container, use this command:
+After getting into the Docker container, use this command:
     
     source turtlebot3_ws/build.bash
