@@ -45,7 +45,7 @@ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
 
 ## Perform learning process in Gazebo
 
-Open another Terminal to navigate to the workspace folder inside docker.
+Open another Terminal to navigate to the workspace folder inside Docker.
 
 ``` bash
 cd regelum-ws
