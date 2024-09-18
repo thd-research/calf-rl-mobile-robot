@@ -129,8 +129,8 @@ note = {Licensed under the MIT License}
 
 ## Bibtex cite
 
-If you use our code for your projects, please give us credit:
-and here is the Bibtex entry for our repo
+If you use our code for your projects, please give us credit.
+Here is the Bibtex entry for our repo
 
 ```
 @misc{calfrobot2024,
