@@ -41,7 +41,7 @@ At the end of this [experiment](https://www.youtube.com/watch?v=RgiDHzE5-w8&ab_c
 
 ## PPO
 
-PPO has unstable performances. Although some runs successfully park near the target, the rest keep a certain distance away from the goal area.
+PPO has unstable performance. Although some runs successfully park near the target, the rest keep a certain distance away from the goal area.
 
 On the left side, `PPO_full` trajectories are raw trajectories from PPO derived mentioned behaviors.
 
