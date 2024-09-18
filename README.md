@@ -43,9 +43,9 @@ At the end of this [experiment](https://www.youtube.com/watch?v=RgiDHzE5-w8&ab_c
 
 PPO has unstable performance. Although some runs successfully park near the target, the rest keep a certain distance away from the goal area.
 
-On the left side, `PPO_full` trajectories are raw trajectories from PPO derived mentioned behaviors.
+On the left side, `PPO_full` trajectories are raw PPO trajectories showing the above behavior.
 
-On the right side, supposing that all the robot stops when reaching the area around the target x=0, y=0 a radius of 0.12 meter, `PPO_simplified` depicts top 10 trajectories satisfying that parking condition.
+On the right side, supposing that the robot stops when reaching the area around the target x=0, y=0 with a radius of 0.12 meters. `PPO_simplified` depicts the top 10 trajectories satisfying that parking condition.
 
 <div align="center">
 <img src="media/report_PPO_full_trajectory.svg" width="402.9"/> <img src="media/report_PPO_simplified_trajectory.svg" width="416"/>
@@ -105,7 +105,7 @@ NOTE: `regelum-control` should be installed in a Jupyter kernel server.
 
 # Remark
 
-We consider the task of mobile robot parking as a benchmarking playground for the studied agents. In general, RL agents apply to any dynamical systems, not restricted to settings addressable by traditional path planning. The mobile robot studied poses a canonical example of a non-holonomic control system hence the interest in it specifically herein. Interested reader may refer to tabular RL though. Yet, curse of dimensionality may pose a formidable problem there.
+We consider the task of mobile robot parking as a benchmarking playground for the studied agents. In general, RL agents apply to any dynamical system, not restricted to settings addressable by traditional path planning. The mobile robot studied poses a canonical example of a non-holonomic control system, hence the interest in it specifically herein. Interested readers may refer to tabular RL, though. Yet, the curse of dimensionality may pose a formidable problem there.
 
 The learning process entirely drove the behavior of all controllers in reaching the goal without relying on traditional path planning methods such as cell decomposition or potential fields.
 <!--The behavior of all controllers in reaching the goal was entirely driven by the learning process, without relying on traditional path planning methods such as cell decomposition or potential fields.-->
