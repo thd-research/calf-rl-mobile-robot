@@ -102,6 +102,8 @@ NOTE: `regelum-control` should be installed in a jupyter kernel server.
 
 # Remark
 
+We consider the task of mobile robot parking as a benchmarking playground for the studied agents. In general, RL agents apply to any dynamical systems, not restricted to settings addressable by traditional path planning. The mobile robot studied poses a canonical example of a non-holonomic control system hence the interest in it specifically herein. Interested reader may refer to tabular RL though. Yet, curse of dimensionality may pose a formidable problem there.
+
 The behavior of all controllers in reaching the goal was entirely driven by the learning process, without relying on traditional path planning methods such as cell decomposition or potential fields.
 
 # Licence
