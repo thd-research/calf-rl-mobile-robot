@@ -1,7 +1,7 @@
 # Installation
 
 ## Description
-Here you will find your exercises
+Here, you will find your exercises
 
 
 ### 1. Install Docker
@@ -16,30 +16,30 @@ If you don't have an Nvidia graphics card, run the command:
     ./install_docker.bash
 
     
-The installation of docker should complete correctly. If docker does not install, it is most likely an error in your utility (apt) settings for downloading and updating from remote repositories. This is a problem you should solve on your own.
+The installation of Docker should be completed correctly. If Docker does not install, it is most likely an error in your utility (apt) settings for downloading and updating from remote repositories. You should solve this problem on your own.
 
 
 ### 2. Building Docker
     
-We must first create the environment in which our program will run. We already have a ready-made environment and we just need to building it:
+We must first create the environment in which our program will run. We already have a ready-made environment, and we need to build it:
 
     source ./build_docker.sh
 
-Next will begin the process of building. If the process ends incorrectly or with an error, you must start building again.
+Next, you will begin the building process. If the process ends incorrectly or with an error, you must start again.
 
 ### 3. Run Docker
 
-To execute the docker container use command:
+To execute the docker container, use the command:
 
     source ./run_docker.sh
     
-If you need additional terminal inside of the Docker open new window in the terminal (Ctrl+Shift+T) and use command
+If you need an additional terminal inside Docker, open a new window in the terminal (Ctrl+Shift+T) and use the command:
 
     source ./into_docker.sh
 
 ### 4. Setup ROS workspace
 
-For the first time using `turtlebot3_ws` workspace, it need to be built to set up turtlebot3 packages.
+If you are using the `turtlebot3_ws` workspace for the first time, it needs to be built to set up turtlebot3 packages.
 
 After getting into the docker container, use this command:
     
